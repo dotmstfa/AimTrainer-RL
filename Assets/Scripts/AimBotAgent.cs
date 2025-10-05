@@ -14,12 +14,15 @@ public class AimBotAgent : Agent
     public TMPro.TMP_Text targetsText;
     public TMPro.TMP_Text accuracyText;
     public TMPro.TMP_Text shotsFiredText;
+    public TMPro.TMP_Text episodeNumText;
     private List<Int64> activeTargets = new List<Int64>();
     private List<GameObject> targets = new List<GameObject>();
-
+    [SerializeField]  LayerMask targetMask;
+    
     private int shotsFired = 0;
     private int targetsHit = 0;
     private bool fired = false;
+    private int episodeNum = 0;
     
     override public void Initialize()
     {
@@ -39,18 +42,16 @@ public class AimBotAgent : Agent
         if (fired)
         {
             RaycastHit hit;
-            Vector3 origin = gun.transform.position;
+            Vector3 origin = gun.transform.parent.transform.position + gun.transform.localPosition;
             Vector3 direction = -gun.transform.right;
             
             if (Physics.Raycast(origin,
                     direction, out hit,
-                    Mathf.Infinity, 1 << 6))
+                    Mathf.Infinity, targetMask))
             {
                 Debug.DrawRay(origin, direction * hit.distance, Color.green);
-                Debug.Log("Did hit");
                 // Add reward of +1f
                 // Set the target to inactive in activeTargets
-                Debug.Log(hit);
                 for (int i = 0; i < numTargets; i++)
                 {
                     if (targets[i] == hit.collider.gameObject)
@@ -60,7 +61,7 @@ public class AimBotAgent : Agent
                     }
                 }
                 // Give reward for hitting target
-                AddReward(1.0f);
+                AddReward(10.0f);
                 shotsFired++;
                 targetsHit++;
             }
@@ -69,7 +70,14 @@ public class AimBotAgent : Agent
                 // Give negative reward for hittign target but missing
                 Debug.DrawRay(origin, direction * 1000, Color.red);
                 Debug.Log("Did not hit");
-                AddReward(-0.5f);
+                if (episodeNum > 500000)
+                {
+                    AddReward(-0.5f); // At the start this disincentives the agent to not shoot, since itll more than likely miss.
+                }
+                else
+                {
+                    AddReward(-0.01f);
+                }
                 shotsFired++;
             }
         }
@@ -84,7 +92,7 @@ public class AimBotAgent : Agent
         // -4.5 <= z <= 4.5
         for (int i = 0; i < numTargets; i++)
         {
-            targets[i].transform.localPosition = new  Vector3(Random.Range(-9.5f, 1f), Random.Range(0.5f, 4.5f), Random.Range(-4.5f, 4.5f)); // assumign (x, y, z)
+            targets[i].transform.position = target.transform.parent.transform.position +  new Vector3(Random.Range(-9.5f, 1f), Random.Range(0.5f, 4.5f), Random.Range(-4.5f, 4.5f)); // assumign (x, y, z)
             activeTargets[i] = 1; // set to active
             targets[i].SetActive(true);
         }
@@ -95,10 +103,12 @@ public class AimBotAgent : Agent
         targetsHit = 0;
         shotsFired = 0;
         fired = false;
+        episodeNum++;
         
         targetsText.text = "Targets Hit: " + targetsHit + "/" +  numTargets;
         accuracyText.text = "Episode Accuracy: " + "100%";
         shotsFiredText.text = "Shots Fired: " + shotsFired;
+        episodeNumText.text = "Epsiode Number: " + episodeNum;
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -124,11 +134,12 @@ public class AimBotAgent : Agent
         // Get the action for Z-axis between -90 and +90
         // Discrete for shoot or not shoot
         
-        float yRotation = actionBuffers.ContinuousActions[0]; // How much to rotate the gun by in the Y-axis
-        float zRotation = -actionBuffers.ContinuousActions[1]; // How much to rotate the gun by in the Z-axis
+        float yRotation = 2f * Mathf.Clamp(actionBuffers.ContinuousActions[0], -1f, 1f); // How much to rotate the gun by in the Y-axis
+        float zRotation = 2f * Mathf.Clamp(-actionBuffers.ContinuousActions[1], -1f, 1f); // How much to rotate the gun by in the Z-axis
         int fire = actionBuffers.DiscreteActions[0]; // Whether to shoot the gun, (0 means dont shoot, 1 means shoot)
         
-        gun.transform.localRotation = gun.transform.localRotation * Quaternion.Euler(0, yRotation, zRotation); // assuming x, y, z
+        gun.transform.Rotate(new Vector3(0, 1, 0), yRotation);
+        gun.transform.Rotate(new Vector3(0, 0, 1), zRotation);
         
         if (targetsHit >= numTargets)
         {
@@ -141,7 +152,6 @@ public class AimBotAgent : Agent
         } else
         {
             fired = false;
-            AddReward(-0.01f); // Add negative reward to incentivize getting shots right away
         }
         
         targetsText.text = "Targets Hit: " + targetsHit + "/" +  numTargets;
@@ -156,10 +166,10 @@ public class AimBotAgent : Agent
     {
         var discreteActionsOut = actionsOut.DiscreteActions;
         var continuousActionsOut = actionsOut.ContinuousActions;
-        continuousActionsOut[0] = Input.GetAxis("Horizontal");
-        continuousActionsOut[1] = Input.GetAxis("Vertical");
+        continuousActionsOut[0] = 10*Input.GetAxis("Mouse X");
+        continuousActionsOut[1] = 10*Input.GetAxis("Mouse Y");
         
-        if (Input.GetKey(KeyCode.Space))
+        if (Input.GetMouseButton(0))
         {
             discreteActionsOut[0] = 1;
         }
