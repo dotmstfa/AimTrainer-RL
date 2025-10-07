@@ -115,8 +115,8 @@ public class AimBotAgent : Agent
         {
             if (fired)
             {
-                AddReward(-0.1f);
-                episodeReward += -0.1f;
+                AddReward(-0.25f);
+                episodeReward += -0.25f;
                 shotsFired++;
             }
             
@@ -176,7 +176,7 @@ public class AimBotAgent : Agent
         // -4.5 <= z <= 4.5
         for (int i = 0; i < numTargets; i++)
         {
-            targets[i].transform.localPosition = new Vector3(Random.Range(-9.0f, 9.0f), Random.Range(1.0f, 9.0f), Random.Range(1.0f, 9.0f)); // assumign (x, y, z)
+            targets[i].transform.localPosition = new Vector3(Random.Range(-9.0f, 9.0f), Random.Range(1.0f, 9.0f), Random.Range(0.0f, 9.0f)); // assumign (x, y, z)
             activeTargets[i] = 1; // set to active
             targets[i].SetActive(true);
             targets[i].GetComponent<Renderer>().material.color = Color.orange;
@@ -213,13 +213,26 @@ public class AimBotAgent : Agent
         {
             if (activeTargets[i] == 1)
             {
-                sensor.AddObservation(targets[i].transform.localPosition.x);
-                sensor.AddObservation(targets[i].transform.localPosition.y);
-                sensor.AddObservation(targets[i].transform.localPosition.z);
-                sensor.AddObservation(1f); // activeTarget
+                sensor.AddObservation(targets[i].transform.localPosition.x / 9f);
+                sensor.AddObservation((targets[i].transform.localPosition.y - 4.5f) / 4.5f);
+                sensor.AddObservation((targets[i].transform.localPosition.z - 4.5f) / 4.5f);
+                // Add the angle distance to currentActive target
+                Vector3 targetDirection = targets[i].transform.position - cam.transform.position;
+                Vector3 camForward = cam.transform.forward;
+                Quaternion desiredRotation = Quaternion.LookRotation(targetDirection);
+                Vector3 desiredEuler = desiredRotation.eulerAngles;
+                Vector3 currentEuler = cam.transform.eulerAngles;
+                float yawDelta = Mathf.DeltaAngle(currentEuler.y, desiredEuler.y);   // Y-axis (left/right)
+                float pitchDelta = Mathf.DeltaAngle(currentEuler.x, desiredEuler.x); // X-axis (up/down)
+                
+                sensor.AddObservation(yawDelta / 180.0f);
+                sensor.AddObservation(pitchDelta / 90.0f);
+                sensor.AddObservation(1.0f); // activeTarget
             }
             else
             {
+                sensor.AddObservation(0f);
+                sensor.AddObservation(0f);
                 sensor.AddObservation(0f);
                 sensor.AddObservation(0f);
                 sensor.AddObservation(0f);
@@ -237,11 +250,9 @@ public class AimBotAgent : Agent
             Vector3 currentEuler = cam.transform.eulerAngles;
             float yawDelta = Mathf.DeltaAngle(currentEuler.y, desiredEuler.y);   // Y-axis (left/right)
             float pitchDelta = Mathf.DeltaAngle(currentEuler.x, desiredEuler.x); // X-axis (up/down)
-                
-            // sensor.AddObservation(yawDelta / 180f);    // Normalized between -1 and 1
-            // sensor.AddObservation(pitchDelta / 180f);  // Normalized between -1 and 1
-            sensor.AddObservation(yawDelta);
-            sensor.AddObservation(pitchDelta);
+            
+            sensor.AddObservation(yawDelta / 180); // Normalized between -1 and 1
+            sensor.AddObservation(pitchDelta / 90); // Normalized between -1 and 1
         }
         else
         {
@@ -250,7 +261,11 @@ public class AimBotAgent : Agent
         }
         
         // Add the rotation of the camera
-        sensor.AddObservation(cam.transform.localRotation.eulerAngles);
+        
+        
+        sensor.AddObservation((cam.transform.localRotation.eulerAngles.x - 180f) / 180f);
+        sensor.AddObservation((cam.transform.localRotation.eulerAngles.y - 180f) / 180f);
+        sensor.AddObservation((cam.transform.localRotation.eulerAngles.z - 180f) / 180f);
     }
 
     override public void OnActionReceived(ActionBuffers actionBuffers)
@@ -293,7 +308,7 @@ public class AimBotAgent : Agent
         rewardText.text = "Reward: " + episodeReward;
         if (shotsFired >= 1)
         {
-            accuracyText.text = "Episode Accuracy: " + targetsHit / shotsFired + "%";
+            accuracyText.text = "Episode Accuracy: " + (double) targetsHit / shotsFired + "%";
         }
 
         steps++;
