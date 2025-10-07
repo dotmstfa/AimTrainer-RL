@@ -1,0 +1,65 @@
+{
+    "Aimbot": {
+        "checkpoints": [
+            {
+                "steps": 28499804,
+                "file_path": "results\\FirstRun\\Aimbot\\Aimbot-28499804.onnx",
+                "reward": 6074.475404834748,
+                "creation_time": 1759774312.853118,
+                "auxillary_file_paths": [
+                    "results\\FirstRun\\Aimbot\\Aimbot-28499804.pt"
+                ]
+            },
+            {
+                "steps": 28999869,
+                "file_path": "results\\FirstRun\\Aimbot\\Aimbot-28999869.onnx",
+                "reward": 7905.164934674899,
+                "creation_time": 1759774977.0653276,
+                "auxillary_file_paths": [
+                    "results\\FirstRun\\Aimbot\\Aimbot-28999869.pt"
+                ]
+            },
+            {
+                "steps": 29499914,
+                "file_path": "results\\FirstRun\\Aimbot\\Aimbot-29499914.onnx",
+                "reward": 6235.100589692593,
+                "creation_time": 1759775616.2742162,
+                "auxillary_file_paths": [
+                    "results\\FirstRun\\Aimbot\\Aimbot-29499914.pt"
+                ]
+            },
+            {
+                "steps": 29999930,
+                "file_path": "results\\FirstRun\\Aimbot\\Aimbot-29999930.onnx",
+                "reward": 6660.291303429008,
+                "creation_time": 1759776289.972332,
+                "auxillary_file_paths": [
+                    "results\\FirstRun\\Aimbot\\Aimbot-29999930.pt"
+                ]
+            },
+            {
+                "steps": 30000186,
+                "file_path": "results\\FirstRun\\Aimbot\\Aimbot-30000186.onnx",
+                "reward": 6660.291303429008,
+                "creation_time": 1759776290.084798,
+                "auxillary_file_paths": [
+                    "results\\FirstRun\\Aimbot\\Aimbot-30000186.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 30000186,
+            "file_path": "results\\FirstRun\\Aimbot.onnx",
+            "reward": 6660.291303429008,
+            "creation_time": 1759776290.084798,
+            "auxillary_file_paths": [
+                "results\\FirstRun\\Aimbot\\Aimbot-30000186.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.2.0.dev0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

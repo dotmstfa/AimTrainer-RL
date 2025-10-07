@@ -1,0 +1,56 @@
+{
+    "Aimbot": {
+        "checkpoints": [
+            {
+                "steps": 499840,
+                "file_path": "results\\SecondRun\\Aimbot\\Aimbot-499840.onnx",
+                "reward": -507.38300711768017,
+                "creation_time": 1759794610.3886797,
+                "auxillary_file_paths": [
+                    "results\\SecondRun\\Aimbot\\Aimbot-499840.pt"
+                ]
+            },
+            {
+                "steps": 999936,
+                "file_path": "results\\SecondRun\\Aimbot\\Aimbot-999936.onnx",
+                "reward": -407.33466272354127,
+                "creation_time": 1759795698.8486798,
+                "auxillary_file_paths": [
+                    "results\\SecondRun\\Aimbot\\Aimbot-999936.pt"
+                ]
+            },
+            {
+                "steps": 1499776,
+                "file_path": "results\\SecondRun\\Aimbot\\Aimbot-1499776.onnx",
+                "reward": -417.34822336832684,
+                "creation_time": 1759796787.676717,
+                "auxillary_file_paths": [
+                    "results\\SecondRun\\Aimbot\\Aimbot-1499776.pt"
+                ]
+            },
+            {
+                "steps": 1596288,
+                "file_path": "results\\SecondRun\\Aimbot\\Aimbot-1596288.onnx",
+                "reward": null,
+                "creation_time": 1759797067.4518695,
+                "auxillary_file_paths": [
+                    "results\\SecondRun\\Aimbot\\Aimbot-1596288.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1596288,
+            "file_path": "results\\SecondRun\\Aimbot.onnx",
+            "reward": null,
+            "creation_time": 1759797067.4518695,
+            "auxillary_file_paths": [
+                "results\\SecondRun\\Aimbot\\Aimbot-1596288.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.2.0.dev0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

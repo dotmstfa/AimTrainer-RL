@@ -1,0 +1,29 @@
+{
+    "Aimbot": {
+        "checkpoints": [
+            {
+                "steps": 390144,
+                "file_path": "results\\Config2\\Aimbot\\Aimbot-390144.onnx",
+                "reward": null,
+                "creation_time": 1759802743.0684004,
+                "auxillary_file_paths": [
+                    "results\\Config2\\Aimbot\\Aimbot-390144.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 390144,
+            "file_path": "results\\Config2\\Aimbot.onnx",
+            "reward": null,
+            "creation_time": 1759802743.0684004,
+            "auxillary_file_paths": [
+                "results\\Config2\\Aimbot\\Aimbot-390144.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.2.0.dev0",
+        "torch_version": "2.2.2+cu121"
+    }
+}
