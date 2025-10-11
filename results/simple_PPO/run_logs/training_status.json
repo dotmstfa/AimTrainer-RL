@@ -1,0 +1,65 @@
+{
+    "Aimbot": {
+        "checkpoints": [
+            {
+                "steps": 19499949,
+                "file_path": "results\\simple_PPO\\Aimbot\\Aimbot-19499949.onnx",
+                "reward": -4.000000189989805,
+                "creation_time": 1759943649.5329218,
+                "auxillary_file_paths": [
+                    "results\\simple_PPO\\Aimbot\\Aimbot-19499949.pt"
+                ]
+            },
+            {
+                "steps": 19999981,
+                "file_path": "results\\simple_PPO\\Aimbot\\Aimbot-19999981.onnx",
+                "reward": -4.000000189989805,
+                "creation_time": 1759944754.5597491,
+                "auxillary_file_paths": [
+                    "results\\simple_PPO\\Aimbot\\Aimbot-19999981.pt"
+                ]
+            },
+            {
+                "steps": 20499949,
+                "file_path": "results\\simple_PPO\\Aimbot\\Aimbot-20499949.onnx",
+                "reward": -4.000000189989805,
+                "creation_time": 1759945854.0498502,
+                "auxillary_file_paths": [
+                    "results\\simple_PPO\\Aimbot\\Aimbot-20499949.pt"
+                ]
+            },
+            {
+                "steps": 20999949,
+                "file_path": "results\\simple_PPO\\Aimbot\\Aimbot-20999949.onnx",
+                "reward": -4.000000189989805,
+                "creation_time": 1759946932.6508045,
+                "auxillary_file_paths": [
+                    "results\\simple_PPO\\Aimbot\\Aimbot-20999949.pt"
+                ]
+            },
+            {
+                "steps": 21490541,
+                "file_path": "results\\simple_PPO\\Aimbot\\Aimbot-21490541.onnx",
+                "reward": -4.000000189989805,
+                "creation_time": 1759947950.0413687,
+                "auxillary_file_paths": [
+                    "results\\simple_PPO\\Aimbot\\Aimbot-21490541.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 21490541,
+            "file_path": "results\\simple_PPO\\Aimbot.onnx",
+            "reward": -4.000000189989805,
+            "creation_time": 1759947950.0413687,
+            "auxillary_file_paths": [
+                "results\\simple_PPO\\Aimbot\\Aimbot-21490541.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "1.2.0.dev0",
+        "torch_version": "2.2.2+cu121"
+    }
+}

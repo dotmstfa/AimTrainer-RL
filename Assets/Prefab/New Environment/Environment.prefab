@@ -55,8 +55,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Unity.ML-Agents::Unity.MLAgents.Policies.BehaviorParameters
   m_BrainParameters:
-    VectorObservationSize: 65
-    NumStackedVectorObservations: 10
+    VectorObservationSize: 33
+    NumStackedVectorObservations: 1
     m_ActionSpec:
       m_NumContinuousActions: 2
       BranchSizes: 02000000
@@ -103,9 +103,10 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 4000
+  MaxStep: 2000
   numTargets: 10
   muzzlePoint: {fileID: 5951448733178634700}
+  bulletNum: 20
   target: {fileID: 7084327264351203156, guid: 016dd8a7aa92a6a499c6ee78f9e0daf1, type: 3}
   cam: {fileID: 3596225889339947440}
   agent: {fileID: 5545959984324614441}
